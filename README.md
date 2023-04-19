@@ -71,10 +71,3 @@ For the unit testing, one can begin mocking and spying the PrismaClient to test 
 2. For Service layer testing, it is recommended to use the Jest/SinonJS for mocking and spying.
 
 3. For API testing, it is recommended to use supertest.
-
-## Contributors
-
-1. Eklak Dangaura
-2. Nirajan Bist
-3. Ishwar Gautam
-4. Bipin Poudel
