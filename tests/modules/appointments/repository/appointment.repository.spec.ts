@@ -9,8 +9,17 @@ import { Appointment } from "@prisma/client";
 import { prismaMock } from "../../../prismaTestSetup";
 
 describe("Create Appointment", ()=> {
+  //arrange
   const createAppointmentMock = prismaMock.appointment.create;
-  const payload = {
+  const createAppointmentDto = {
+    title: "John Doe",
+    date: new Date(),
+    appointmentBy: "Jane Doe",
+    appointmentFor: "John Doe",
+    isConfirmed: true,
+    purpose: "Annual checkup"
+  }
+  const payload: Appointment = {
     id: "1",
     title: "John Doe",
     date: new Date(),
@@ -22,23 +31,21 @@ describe("Create Appointment", ()=> {
     isCancelled: false,
     createdAt: new Date(),
     updatedAt: new Date()
-  } as Appointment
+  }
 
-  it("should call appointment create function with parameters", async()=> {
-    //arrange
-    createAppointmentMock.mockResolvedValue(payload)
+  it("should call appointment create function with createAppointmentDto parameters", async()=> {
     //act
-    await createAppointment(payload);
+    await createAppointment(createAppointmentDto);
     //assert
     expect(createAppointmentMock).toBeCalledTimes(1);
-    expect(createAppointmentMock).toHaveBeenCalledWith({ data: payload })
+    expect(createAppointmentMock).toHaveBeenCalledWith({ data: createAppointmentDto })
   });
 
   it("should return created appointment json body", async()=> {
     //arrange
     createAppointmentMock.mockResolvedValue(payload);
     //act
-    const appointment = await createAppointment(payload);
+    const appointment = await createAppointment(createAppointmentDto);
     //assert
     expect(appointment).toStrictEqual(payload);
   });
@@ -48,7 +55,7 @@ describe("Get appointment by appointment id", ()=> {
   it("should return an appointment with given valid appointment id", async()=> {
     //arrange
     const appointmentId = '643fb6ba6f37cd81bb1879bd'
-    const payload = {
+    const payload: Appointment = {
       id: appointmentId,
       title: "John Doe",
       date: new Date(),
@@ -60,7 +67,7 @@ describe("Get appointment by appointment id", ()=> {
       isCancelled: false,
       createdAt: new Date(),
       updatedAt: new Date()
-    } as Appointment
+    }
     prismaMock.appointment.findUnique.mockResolvedValue(payload);
     //act
     const appointment = await getAppointmentById(appointmentId);
@@ -75,7 +82,7 @@ describe("Get appointments by user id", ()=> {
     const appointmentIdOne = '643fb6ba6f37cd81bb1879bd';
     const appointmentIdTwo = '612ac9ea2c974d001f123456'
     const userId = '5f6d8a6b0a6aef0012345678';
-    const payload = [
+    const payload: Appointment[] = [
       {
       id: appointmentIdOne,
       title: "John Doe",
@@ -102,7 +109,7 @@ describe("Get appointments by user id", ()=> {
       createdAt: new Date(),
       updatedAt: new Date()
     }    
-  ] as Appointment[]
+  ]
     prismaMock.appointment.findMany.mockResolvedValue(payload);
     //act
     const appointment = await getAppointmentsByUserId(userId, 10, 1, 'title', 'asc');
@@ -111,11 +118,11 @@ describe("Get appointments by user id", ()=> {
   });
 });
 
-describe("Update appointments by appointment id", ()=> {
+describe("Update appointment", ()=> {
   it("should return updated appointments counts with given valid appointment id", async()=> {
     //arrange
     const appointmentId = '643fb6ba6f37cd81bb1879bd'
-    const payload = {
+    const payload: Appointment = {
       id: appointmentId,
       title: "John Doe",
       date: new Date(),
@@ -127,19 +134,19 @@ describe("Update appointments by appointment id", ()=> {
       isCancelled: false,
       createdAt: new Date(),
       updatedAt: new Date()
-    } as Appointment
-    const updatedBatchRecords = {
+    }
+    const updatedRecordsCount = {
       count: 10
     }
-    prismaMock.appointment.updateMany.mockResolvedValue(updatedBatchRecords);
+    prismaMock.appointment.updateMany.mockResolvedValue(updatedRecordsCount);
     //act
     const appointment = await updateAppointmentById(appointmentId, payload);
     //assert
-    expect(appointment).toStrictEqual(updatedBatchRecords);
+    expect(appointment).toStrictEqual(updatedRecordsCount);
   });
 });
 
-describe("Delete appointments by appointment and user id", ()=> {
+describe("Delete appointment", ()=> {
   it("should return deleted appointments counts with given valid appointment and user id", async()=> {
     //arrange
     const appointmentId = '643fb6ba6f37cd81bb1879bd';

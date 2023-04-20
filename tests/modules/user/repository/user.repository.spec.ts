@@ -8,8 +8,9 @@ import { prismaMock } from "../../../prismaTestSetup";
 
 describe("Get a user by email", ()=> {
     it("should return user json body", async()=> {
+        //arrange
         const email = "johndoe@example.com"
-        const payload = {
+        const payload: User = {
             id: "12345",
             firstName: "John",
             lastName: "Doe",
@@ -21,16 +22,26 @@ describe("Get a user by email", ()=> {
             isVerified: false,
             createdAt: new Date(),
             updatedAt: new Date()
-        } as User
+        }
         prismaMock.user.findUnique.mockResolvedValue(payload);
+        //act
         const user = await getExistingUser(email);
+        //assert
         expect(user).toStrictEqual(payload)
     })
 });
 
 describe("Create a user", ()=> {
     it("should return created user json body", async()=> {
-        const payload = {
+        const createUserDto = {
+            firstName: "John",
+            lastName: "Doe",
+            password: "1234",
+            address: "123 Main Street",
+            phoneNumber: "+1 (555) 555-5555",
+            email:  "johndoe@example.com",
+        }
+        const payload: User = {
             id: "12345",
             firstName: "John",
             lastName: "Doe",
@@ -42,16 +53,16 @@ describe("Create a user", ()=> {
             isVerified: false,
             createdAt: new Date(),
             updatedAt: new Date()
-        } as User
+        }
         prismaMock.user.create.mockResolvedValue(payload);
-        const user = await createUser(payload);
+        const user = await createUser(createUserDto);
         expect(user).toStrictEqual(payload)
     })
 });
 
 describe("Get users", ()=> {
     it("should return users json body", async()=> {
-    const payload = 
+    const payload: User[] = 
     [
         {
             id: "12345",
@@ -80,7 +91,7 @@ describe("Get users", ()=> {
             updatedAt: new Date()
           }
           
-    ] as User[]
+    ]
         prismaMock.user.findMany.mockResolvedValue(payload);
         const users = await fetchUser();
         expect(users).toStrictEqual(payload)

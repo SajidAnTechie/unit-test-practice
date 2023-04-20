@@ -35,7 +35,7 @@ export const getUserCreatedAppointments = async (
     sortDir
   );
   if (!appointments) {
-    throw AppError.badRequest(`Error while fetching the appointmetns`);
+    throw AppError.badRequest(`Error while fetching the appointments`);
   }
   return appointments;
 };
