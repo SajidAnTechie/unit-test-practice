@@ -6,8 +6,8 @@ import {
     getAppointmentsByUserId, 
     updateAppointmentById 
   }  from "@modules/appointments/repository/appointment.repository";
-  import * as AppointmentService from "@modules/appointments/services/appointment.service";
-  import { Appointment } from "@prisma/client";
+import * as AppointmentService from "@modules/appointments/services/appointment.service";
+import { Appointment } from "@prisma/client";
 
 jest.mock("@modules/appointments/repository/appointment.repository", ()=> {
     return {
