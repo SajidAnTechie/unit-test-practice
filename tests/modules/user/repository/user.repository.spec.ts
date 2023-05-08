@@ -23,6 +23,7 @@ describe('Get a user by email', () => {
       createdAt: new Date(),
       updatedAt: new Date()
     };
+    //@ts-ignore
     prismaMock.user.findUnique.mockResolvedValue(payload);
     //act
     const user = await getExistingUser(email);
@@ -54,6 +55,7 @@ describe('Create a user', () => {
       createdAt: new Date(),
       updatedAt: new Date()
     };
+    //@ts-ignore
     prismaMock.user.create.mockResolvedValue(payload);
     const user = await createUser(createUserDto);
     expect(user).toStrictEqual(payload);
@@ -90,6 +92,7 @@ describe('Get users', () => {
         updatedAt: new Date()
       }
     ];
+    //@ts-ignore
     prismaMock.user.findMany.mockResolvedValue(payload);
     const users = await fetchUser();
     expect(users).toStrictEqual(payload);

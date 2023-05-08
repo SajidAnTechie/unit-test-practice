@@ -10,6 +10,7 @@ import { prismaMock } from '../../../prismaTestSetup';
 
 describe('Create Appointment', () => {
   //arrange
+  //@ts-ignore
   const createAppointmentMock = prismaMock.appointment.create;
   const createAppointmentDto = {
     title: 'John Doe',
@@ -70,6 +71,7 @@ describe('Get appointment by appointment id', () => {
       createdAt: new Date(),
       updatedAt: new Date()
     };
+    //@ts-ignore
     prismaMock.appointment.findUnique.mockResolvedValue(payload);
     //act
     const appointment = await getAppointmentById(appointmentId);
@@ -112,6 +114,7 @@ describe('Get appointments by user id', () => {
         updatedAt: new Date()
       }
     ];
+    //@ts-ignore
     prismaMock.appointment.findMany.mockResolvedValue(payload);
     //act
     const appointment = await getAppointmentsByUserId(
@@ -146,6 +149,7 @@ describe('Update appointment', () => {
     const updatedRecordsCount = {
       count: 10
     };
+    //@ts-ignore
     prismaMock.appointment.updateMany.mockResolvedValue(updatedRecordsCount);
     //act
     const appointment = await updateAppointmentById(appointmentId, payload);
@@ -162,6 +166,7 @@ describe('Delete appointment', () => {
     const deletedAppointmentRecordsCount = {
       count: 10
     };
+    //@ts-ignore
     prismaMock.appointment.deleteMany.mockResolvedValue(
       deletedAppointmentRecordsCount
     );
